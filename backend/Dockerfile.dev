@@ -1,0 +1,14 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json yarn.lock docs/ ./
+
+# install exactly the same package version as in current project
+RUN yarn --frozen-lockfile
+
+COPY . .
+
+EXPOSE 3000
+
+CMD yarn start:dev

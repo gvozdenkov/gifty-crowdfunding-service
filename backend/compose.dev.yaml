@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: wish-magic-db-dev
+    image: postgres:14.3-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+  app:
+    container_name: wish-magic-app
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./src:/app/src
+    environment:
+      # map env vars from .env file
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}

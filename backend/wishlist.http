@@ -1,0 +1,37 @@
+### Create Wishlist
+POST http://localhost:3000/api/v1/wishlists
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwZTRmMGNmZC1iMGRhLTRiMzQtYmVkOC05NjRmNGQwMTllN2MiLCJpYXQiOjE3MTM1MDU1ODMsImV4cCI6MTcxMzU5MTk4M30.1vJQWHuP3jIXb5yXbOzCJ6LO1xi1KGh61-Mh7jfyumc
+
+{
+  "name": "Wishlist 1 of user1",
+  "description": "Cool wishlist 01"
+}
+
+### Get all Wishlists
+GET http://localhost:3000/api/v1/wishlists
+
+### Get Wishlist by id
+GET http://localhost:3000/api/v1/wishlists/9cbb0336-13be-41d1-8ba5-083ea20cff29
+
+### Patch Wishlist by id
+PATCH  http://localhost:3000/api/v1/wishlists/91e5b8af-1666-4a33-a026-4c538e458baf
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwZTRmMGNmZC1iMGRhLTRiMzQtYmVkOC05NjRmNGQwMTllN2MiLCJpYXQiOjE3MTM1MDU1ODMsImV4cCI6MTcxMzU5MTk4M30.1vJQWHuP3jIXb5yXbOzCJ6LO1xi1KGh61-Mh7jfyumc
+
+{
+  "name": "Yoooooooo"
+}
+
+### Patch Wishlist by id
+PATCH  http://localhost:3000/api/v1/wishlists/9cbb0336-13be-41d1-8ba5-083ea20cff29
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwZTRmMGNmZC1iMGRhLTRiMzQtYmVkOC05NjRmNGQwMTllN2MiLCJpYXQiOjE3MTM1MDU1ODMsImV4cCI6MTcxMzU5MTk4M30.1vJQWHuP3jIXb5yXbOzCJ6LO1xi1KGh61-Mh7jfyumc
+
+{
+  "title": "Yo"
+}
+
+### Delete Wishlist by id
+DELETE   http://localhost:3000/api/v1/wishlists/9cbb0336-13be-41d1-8ba5-083ea20cff29
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwZTRmMGNmZC1iMGRhLTRiMzQtYmVkOC05NjRmNGQwMTllN2MiLCJpYXQiOjE3MTM1MDU1ODMsImV4cCI6MTcxMzU5MTk4M30.1vJQWHuP3jIXb5yXbOzCJ6LO1xi1KGh61-Mh7jfyumc

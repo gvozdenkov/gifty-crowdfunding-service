@@ -1,0 +1,68 @@
+### Register
+POST http://localhost:3000/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "email": "user1@mail.com",
+  "password": "12345"
+}
+
+### Login
+POST http://localhost:3000/api/v1/auth/signin
+Content-Type: application/json
+
+{
+  "email": "user1@mail.com",
+  "password": "12345"
+}
+
+### Create wish #1
+POST http://localhost:3000/api/v1/wishes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1MDE4OWUxMy0wZTAwLTQ5ZjQtOTBkYi05N2ZhNTA4YzBiYjIiLCJpYXQiOjE3MTMyNzI4MDgsImV4cCI6MTcxMzM1OTIwOH0.f-u1KdWpvmB46ohMHjGHQGuLwgY_6LmfPMZ_nnWv6vM
+
+{
+  "name": "Wish of user1",
+  "link": "https://www.ebay.com/itm/332673910514?epid=1800195714",
+  "image": "https://i.ebayimg.com/images/g/m6AAAOSw6CJbFF8g/s-l960.png",
+  "price": 555.99,
+  "description": "Description for wish 01"
+}
+
+
+### Get Wish by id
+GET http://localhost:3000/api/v1/wishes/7bc5829a-86d4-4fb2-b9f8-8f95199ae734
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYmExNWNhOC0yZTkyLTQxMGItYTcwYS0yYTk3MTlkNWQzNjEiLCJpYXQiOjE3MTMyNjE4MTIsImV4cCI6MTcxMzM0ODIxMn0.KB6xv_Zum-Dletndc3iIOY26FYToDdV5qRlqyQB1VC0
+
+### Copy wish
+POST  http://localhost:3000/api/v1/wishes/d879b4a7-af36-43e8-b567-4ab67b072af0/copy
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYmExNWNhOC0yZTkyLTQxMGItYTcwYS0yYTk3MTlkNWQzNjEiLCJpYXQiOjE3MTMyNDgwMzIsImV4cCI6MTcxMzMzNDQzMn0.svxiTMKeHTwN1WkSU6PP_SpUHAmqyryRzYwvmKOsBPM
+
+{}
+
+### Get last
+GET http://localhost:3000/api/v1/wishes/last
+
+### Get top
+GET http://localhost:3000/api/v1/wishes/top
+
+### Get Me wishes
+GET http://localhost:3000/api/v1/users/me/wishes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiM2FmODk4ZS02MDJlLTQ3MWQtOTUwZS05OGJmZTZiMGJkYmIiLCJpYXQiOjE3MTMyNjMzOTEsImV4cCI6MTcxMzM0OTc5MX0.jPE7xDTlYZpxQNHKHwwzwCfC8dBTTObv7mNfSrYb8nk
+
+### Update wish
+PATCH http://localhost:3000/api/v1/wishes/520a5c70-447a-4ba4-a85d-4d605e06b3f0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYjM4OWU0Mi1jOTQyLTQ1NjQtYmMyZi0yZTVhY2JkMTgxNDUiLCJpYXQiOjE3MTMyNDU3MDksImV4cCI6MTcxMzMzMjEwOX0.FHpq-2trnAkrgD0o-kzzkc4IiToUZHL3Oq3pNLq2LVQ
+
+{
+  "title": "Updated 4 wish of user1"
+}
+
+### remove wish
+DELETE  http://localhost:3000/api/v1/wishes/919d730b-5eb7-43d8-8a38-5818ed670c4d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxYjM4OWU0Mi1jOTQyLTQ1NjQtYmMyZi0yZTVhY2JkMTgxNDUiLCJpYXQiOjE3MTMyNDU3MDksImV4cCI6MTcxMzMzMjEwOX0.FHpq-2trnAkrgD0o-kzzkc4IiToUZHL3Oq3pNLq2LVQ

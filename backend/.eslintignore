@@ -1,0 +1,4 @@
+node_modules
+commitlint.config.ts
+build
+test

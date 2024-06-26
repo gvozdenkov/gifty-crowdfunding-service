@@ -1,0 +1,1198 @@
+---
+openapi: 3.1.0
+info:
+  title: Gift Croudfunding
+  description: >-
+    Gift croudfunding service API
+
+    Some useful links:
+
+    - [backend repository](https://github.com/gvozdenkov/kupipodariday-backend)
+
+    - [frontend repository](https://github.com/yandex-praktikum/kupipodariday-frontend)
+
+    - [The source API
+    definition](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  contact:
+    email: gvozdenkov@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit/
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Locale dev server
+  - url: https://virtserver.swaggerhub.com/zlocate/KupiPodariDay/1.0.0
+    description: SwaggerHub API Auto Mocking
+
+tags:
+  - name: wishes
+    description: Operations with wishes
+  - name: users
+    description: Operations with users
+  - name: offers
+    description: Operations with offers
+  - name: wishlists
+    description: Operations with wishlists
+  - name: auth
+    description: auth operations
+
+paths:
+  /users/me:
+    get:
+      tags:
+        - users
+      operationId: UsersController_findOwn
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponseDto'
+      security:
+        - bearerAuth: []
+    patch:
+      tags:
+        - users
+      operationId: UsersController_update
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponseDto'
+        '400':
+          description: Ошибка валидации переданных значений
+      security:
+        - bearerAuth: []
+  /users/me/wishes:
+    get:
+      tags:
+        - users
+      operationId: UsersController_getOwnWishes
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MeWishFeed'
+      security:
+        - bearerAuth: []
+  /users/{username}:
+    get:
+      tags:
+        - users
+      operationId: UsersController_findOne
+      parameters:
+        - name: username
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPublicProfileResponseDto'
+      security:
+        - bearerAuth: []
+  /users/{username}/wishes:
+    get:
+      tags:
+        - users
+      operationId: UsersController_getWishes
+      parameters:
+        - name: username
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserWishesDto'
+      security:
+        - bearerAuth: []
+  /users/find:
+    get:
+      tags:
+        - users
+      operationId: UsersController_findMany
+      parameters:
+        - name: username
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: email
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserProfileResponseDto'
+      security:
+        - bearerAuth: []
+  /wishes:
+    post:
+      tags:
+        - wishes
+      operationId: WishesController_create
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWishDto'
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - bearerAuth: []
+  /wishes/last:
+    get:
+      tags:
+        - wishes
+      operationId: WishesController_findLast
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WishFeed'
+      security:
+        - bearerAuth: []
+  /wishes/top:
+    get:
+      tags:
+        - wishes
+      operationId: WishesController_findTop
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WishFeed'
+      security:
+        - bearerAuth: []
+  /wishes/{id}:
+    get:
+      tags:
+        - wishes
+      operationId: WishesController_findOne
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WishById'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - wishes
+      operationId: WishesController_removeOne
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wish'
+      security:
+        - bearerAuth: []
+    patch:
+      tags:
+        - wishes
+      operationId: WishesController_update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWishDto'
+        required: true
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+  /wishes/{id}/copy:
+    post:
+      tags:
+        - wishes
+      operationId: WishesController_copyWish
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - bearerAuth: []
+  /offers:
+    get:
+      tags:
+        - offers
+      operationId: OffersController_findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Offer'
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - offers
+      operationId: OffersController_create
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOfferDto'
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - bearerAuth: []
+  /offers/{id}:
+    get:
+      tags:
+        - offers
+      operationId: OffersController_findOne
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offer'
+      security:
+        - bearerAuth: []
+  /wishlists:
+    get:
+      tags:
+        - wishlists
+      operationId: WishlistsController_findAll
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Wishlist'
+    post:
+      tags:
+        - wishlists
+      operationId: WishlistsController_create
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWishlistDto'
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wishlist'
+      security:
+        - bearerAuth: []
+  /wishlists/{id}:
+    get:
+      tags:
+        - wishlists
+      operationId: WishlistsController_findOne
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wishlist'
+      security:
+        - bearerAuth: []
+    delete:
+      tags:
+        - wishlists
+      operationId: WishlistsController_removeOne
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wishlist'
+      security:
+        - bearerAuth: []
+    patch:
+      tags:
+        - wishlists
+      operationId: WishlistsController_update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWishlistDto'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wishlist'
+      security:
+        - bearerAuth: []
+  /auth/signin:
+    post:
+      tags:
+        - auth
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SigninUserDto'
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigninUserResponseDto'
+        '401':
+          description: Некорректная пара логин и пароль
+  /auth/signup:
+    post:
+      tags:
+        - auth
+      operationId: AuthController_signup
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignupUserResponseDto'
+        '409':
+          description: Пользователь с таким email или username уже зарегистрирован
+components:
+  schemas:
+    UserProfileResponseDto:
+      required:
+        - about
+        - avatar
+        - createdAt
+        - email
+        - id
+        - updatedAt
+        - username
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          maxLength: 64
+          minLength: 1
+          type: string
+          example: user
+        about:
+          maxLength: 200
+          minLength: 1
+          type: string
+          example: Пока ничего не рассказал о себе
+        avatar:
+          type: string
+          example: https://i.pravatar.cc/300
+        email:
+          type: string
+          example: user@yandex.ru
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    UpdateUserDto:
+      type: object
+      properties:
+        username:
+          maxLength: 64
+          minLength: 1
+          type: string
+          example: exampleuser
+        about:
+          maxLength: 200
+          minLength: 0
+          type: string
+          example: exampleuser
+        avatar:
+          type: string
+          example: https://i.pravatar.cc/150?img=3
+        email:
+          type: string
+          example: user@yandex.ru
+        password:
+          minLength: 2
+          type: string
+          example: somestrongpassword
+    Offer:
+      required:
+        - amount
+        - createdAt
+        - hidden
+        - id
+        - item
+        - updatedAt
+        - user
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        item:
+          $ref: '#/components/schemas/Wish'
+        amount:
+          type: number
+        hidden:
+          type: boolean
+        user:
+          $ref: '#/components/schemas/User'
+    OfferResponseDto:
+      required:
+        - amount
+        - createdAt
+        - hidden
+        - id
+        - item
+        - updatedAt
+        - user
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        amount:
+          type: number
+        hidden:
+          type: boolean
+        user:
+          $ref: '#/components/schemas/UserPublicProfileResponseDto'
+    WishPartial:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        name:
+          maxLength: 250
+          minLength: 1
+          type: string
+        link:
+          type: string
+        image:
+          type: string
+        price:
+          minimum: 1
+          type: number
+        raised:
+          minimum: 1
+          type: number
+        copied:
+          type: number
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+    Wish:
+      required:
+        - copied
+        - createdAt
+        - description
+        - id
+        - image
+        - link
+        - name
+        - offers
+        - owner
+        - price
+        - raised
+        - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        name:
+          maxLength: 250
+          minLength: 1
+          type: string
+        link:
+          type: string
+        image:
+          type: string
+        price:
+          minimum: 1
+          type: number
+        raised:
+          minimum: 1
+          type: number
+        copied:
+          type: number
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+        owner:
+          $ref: '#/components/schemas/UserPublicProfileResponseDto'
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Offer'
+    WishFeed:
+      required:
+        - copied
+        - createdAt
+        - description
+        - id
+        - image
+        - link
+        - name
+        - offers
+        - owner
+        - price
+        - raised
+        - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        name:
+          maxLength: 250
+          minLength: 1
+          type: string
+        link:
+          type: string
+        image:
+          type: string
+        price:
+          minimum: 1
+          type: number
+        raised:
+          minimum: 1
+          type: number
+        copied:
+          type: number
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+        owner:
+          $ref: '#/components/schemas/UserPublicProfileResponseDto'
+    WishById:
+      required:
+        - copied
+        - createdAt
+        - description
+        - id
+        - image
+        - link
+        - name
+        - offers
+        - owner
+        - price
+        - raised
+        - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        name:
+          maxLength: 250
+          minLength: 1
+          type: string
+        link:
+          type: string
+        image:
+          type: string
+        price:
+          minimum: 1
+          type: number
+        raised:
+          minimum: 1
+          type: number
+        copied:
+          type: number
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+        owner:
+          $ref: '#/components/schemas/UserPublicProfileResponseDto'
+        offers:
+          $ref: '#/components/schemas/OfferResponseDto'
+    MeWishFeed:
+      required:
+        - copied
+        - createdAt
+        - description
+        - id
+        - image
+        - link
+        - name
+        - offers
+        - owner
+        - price
+        - raised
+        - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        name:
+          maxLength: 250
+          minLength: 1
+          type: string
+        link:
+          type: string
+        image:
+          type: string
+        price:
+          minimum: 1
+          type: number
+        raised:
+          minimum: 1
+          type: number
+        copied:
+          type: number
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+    Wishlist:
+      required:
+        - id
+        - name
+        - wishes
+        - owner
+        - createdAt
+        - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        name:
+          maxLength: 250
+          minLength: 0
+          type: string
+        description:
+          maxLength: 1500
+          minLength: 2
+          type: string
+        cover:
+          type: string
+        owner:
+          $ref: '#/components/schemas/UserPublicProfileResponseDto'
+        wishes:
+          type: array
+          items:
+            $ref: '#/components/schemas/WishPartial'
+    User:
+      required:
+        - about
+        - avatar
+        - createdAt
+        - email
+        - id
+        - offers
+        - updatedAt
+        - username
+        - wishes
+        - wishlists
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          maxLength: 64
+          minLength: 1
+          type: string
+          example: user
+        about:
+          maxLength: 200
+          minLength: 1
+          type: string
+          example: Пока ничего не рассказал о себе
+        avatar:
+          type: string
+          example: https://i.pravatar.cc/300
+        email:
+          type: string
+          example: user@yandex.ru
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        wishes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Wish'
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Wish'
+        wishlists:
+          type: array
+          items:
+            $ref: '#/components/schemas/Wishlist'
+    UserPublicProfileResponseDto:
+      required:
+        - about
+        - avatar
+        - createdAt
+        - id
+        - updatedAt
+        - username
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          maxLength: 64
+          minLength: 1
+          type: string
+          example: user
+        about:
+          maxLength: 200
+          minLength: 1
+          type: string
+          example: Пока ничего не рассказал о себе
+        avatar:
+          type: string
+          example: https://i.pravatar.cc/300
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    UserWishesDto:
+      required:
+        - copied
+        - createdAt
+        - description
+        - id
+        - image
+        - link
+        - name
+        - offers
+        - price
+        - raised
+        - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        name:
+          maxLength: 250
+          minLength: 1
+          type: string
+        link:
+          type: string
+        image:
+          type: string
+        price:
+          minimum: 1
+          type: number
+        raised:
+          minimum: 1
+          type: number
+        copied:
+          type: number
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+    FindUsersDto:
+      required:
+        - query
+      type: object
+      properties:
+        query:
+          type: string
+          description: username или email
+          example: some@ya.ru
+    CreateWishDto:
+      required:
+        - description
+        - image
+        - link
+        - name
+        - price
+      type: object
+      properties:
+        name:
+          maxLength: 250
+          minLength: 1
+          type: string
+          example: 'Loftus Original World Famous 19" Rubber Yellow Chicken -Classic Fun Joke Gag Toy'
+        link:
+          type: string
+          example: 'https://www.ebay.com/itm/332673910514?epid=1800195714&itmmeta=01HTH9FPWJ4NJWJFP8SHB61Z8V&hash=item4d74e906f2:g:mVwAAOSwg~RePg2u&itmprp=enc%3AAQAJAAAA0GdvIkz36RGVljc%2F351gsZXZFCUWmQf6e%2F%2BhCA2ULsz50mrgki6%2B1S2QQD3TwdecO7Eu%2F6c%2BrsE%2FhmAZcEGUzMwz7bp9E76qJ8SOiHAfc7cSTuQjC9NmcWI6J60I09TskSOJvQHrPZML%2FmhFQpZGwaRj%2Bvc7yxxmCiSbXpiBEdcuQHpQ4ut0H1uehboT2kTD6%2FgPJxdDxSH801Qwr3qnOQlIOX3CdDe1%2BFOtyBobGFPhayZLUIiOVR3a%2FaqYDEQmFWqW8JaofR0qn%2FEmRbo%2Ftbs%3D%7Ctkp%3ABk9SR7DuvqnUYw'
+        image:
+          type: string
+          example: 'https://i.ebayimg.com/images/g/m6AAAOSw6CJbFF8g/s-l960.png'
+        price:
+          minimum: 1
+          type: number
+          example: 1011.37
+        description:
+          type: string
+          example: "There is a good reason that the Rubber Chicken has become such a classic gag in comedic circles. I mean look at it! It's just so freaking hysterical looking! And now you can have your daily dose of Rubber Chicken in super sized format with the Large 19\" Rubber Chicken!"
+    UpdateWishDto:
+      type: object
+      properties: {}
+    CreateOfferDto:
+      required:
+        - amount
+        - item
+      type: object
+      properties:
+        amount:
+          minimum: 1
+          type: number
+        hidden:
+          type: boolean
+        item:
+          type: string
+          format: uuid
+    CreateWishlistDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: New Wishlist
+        cover:
+          type: string
+          example: https://placehold.jp/b0b0b0/ffffff/200x200.png?text=New%20Wishlist
+        wishes:
+          type: array
+          items:
+            type: string
+            format: uuid
+    UpdateWishlistDto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Мой вишлист
+        cover:
+          type: string
+          example: https://placehold.jp/b0b0b0/ffffff/200x200.png?text=Updated%20Wishlist
+        wishes:
+          type: array
+          items:
+            type: string
+            format: uuid
+    SigninUserDto:
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          maxLength: 64
+          minLength: 1
+          type: string
+          example: exampleuser
+        password:
+          minLength: 2
+          type: string
+          example: somestrongpassword
+    SigninUserResponseDto:
+      required:
+        - access_token
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT-токен
+    CreateUserDto:
+      required:
+        - email
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          maxLength: 64
+          minLength: 1
+          type: string
+          example: exampleuser
+        about:
+          maxLength: 200
+          minLength: 0
+          type: string
+          example: exampleuser
+        avatar:
+          type: string
+          example: https://i.pravatar.cc/150?img=3
+        email:
+          type: string
+          example: user@yandex.ru
+        password:
+          minLength: 2
+          type: string
+          example: somestrongpassword
+    SignupUserResponseDto:
+      required:
+        - about
+        - avatar
+        - createdAt
+        - email
+        - id
+        - updatedAt
+        - username
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          maxLength: 64
+          minLength: 1
+          type: string
+          example: user
+        about:
+          maxLength: 200
+          minLength: 1
+          type: string
+          example: Пока ничего не рассказал о себе
+        avatar:
+          type: string
+          example: https://i.pravatar.cc/300
+        email:
+          type: string
+          example: user@yandex.ru
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
