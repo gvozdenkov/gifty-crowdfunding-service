@@ -5,4 +5,4 @@
 !tsconfig.json
 !package*.json
 !ecosystem.config.js
-!.env
+!.env*
