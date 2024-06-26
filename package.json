@@ -4,7 +4,9 @@
   "description": "gift crowdfunding service",
   "main": "index.js",
   "scripts": {
-    "prettier": "prettier --write '**/*.(ts|js)'"
+    "prettier": "prettier --write '**/*.(ts|js)'",
+    "prepare": "husky install",
+    "cz": "cz"
   },
   "author": "arty gvozdenkov",
   "license": "ISC",
