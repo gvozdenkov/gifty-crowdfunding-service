@@ -1,0 +1,14 @@
+services:
+  frontend:
+    container_name: gifty-frontend-dev
+    image: gifty-frontend:dev
+    restart: on-failure
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/src:/app/src
+    env_file:
+      - ./frontend/.env.development

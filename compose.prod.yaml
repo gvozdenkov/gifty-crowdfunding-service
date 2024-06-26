@@ -1,0 +1,47 @@
+services:
+  frontend:
+    container_name: gifty-frontend-prod
+    image: gifty-frontend:prod
+    depends_on:
+      - backend
+    restart: on-failure
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - 3000:80
+    profiles: [frontend]
+
+  backend:
+    container_name: gifty-backend-prod
+    depends_on:
+      - db
+    image: gifty-backend:prod
+    restart: on-failure
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    ports:
+      - 4000:3000
+    env_file:
+      - ./backend/.env.production
+    profiles: [backend]
+
+  db:
+    container_name: gifty-postgres-prod
+    image: postgres:14.3-alpine
+    restart: on-failure
+    ports:
+      - 5432:5432
+    env_file:
+      - ./backend/.env.production
+    profiles: [backend]
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+
+
