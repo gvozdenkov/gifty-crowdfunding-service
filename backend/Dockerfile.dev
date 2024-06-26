@@ -2,13 +2,13 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package.json yarn.lock docs/ ./
+COPY package*.json docs/ ./
 
 # install exactly the same package version as in current project
-RUN yarn --frozen-lockfile
+RUN npm ci --no-audit --no-fund
 
 COPY . .
 
 EXPOSE 3000
 
-CMD yarn start:dev
+CMD npm run start:dev

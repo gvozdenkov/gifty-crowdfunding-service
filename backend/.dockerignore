@@ -3,6 +3,6 @@
 !docs/
 !src/
 !tsconfig.json
-!package.json
-!yarn.lock
+!package*.json
+!ecosystem.config.js
 !.env
