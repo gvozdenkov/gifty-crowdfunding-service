@@ -1,4 +1,4 @@
-export const URL = 'http://localhost:3000/api/v1';
+export const URL = 'http://localhost:4000/api/v1';
 
 export const MINIMUM_PASSWORD_LENGTH = 3;
 export const MINIMUM_USERNAME_LENGTH = 3;
