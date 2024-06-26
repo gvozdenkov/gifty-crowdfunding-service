@@ -1,0 +1,14 @@
+{
+  "name": "gifty",
+  "version": "1.0.0",
+  "description": "gift crowdfunding service",
+  "main": "index.js",
+  "scripts": {
+    "prettier": "prettier --write '**/*.(ts|js)'"
+  },
+  "author": "arty gvozdenkov",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.3.2"
+  }
+}
