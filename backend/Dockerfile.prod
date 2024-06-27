@@ -2,13 +2,13 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json docs/ ./
+COPY package*.json .
+
+COPY ./docs/openapi.yaml ./docs/openapi.yaml
 
 RUN npm ci --no-audit --no-fund
 
 COPY . .
-
-EXPOSE 3000
 
 RUN npm run build
 
@@ -16,7 +16,9 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-COPY package*.json docs/ ./
+COPY package*.json .
+
+COPY ./docs/openapi.yaml ./docs/openapi.yaml
 
 RUN npm ci --omit=dev --no-audit --no-fund && \
     npm i -g pm2
