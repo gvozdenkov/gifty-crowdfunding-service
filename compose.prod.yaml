@@ -9,8 +9,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
-      - 3000:80
-    profiles: [frontend]
+      - 8081:80
 
   backend:
     container_name: gifty-backend-prod
@@ -25,7 +24,6 @@ services:
       - 4000:3000
     env_file:
       - ./backend/.env.production
-    profiles: [backend]
 
   db:
     container_name: gifty-postgres-prod
@@ -35,13 +33,16 @@ services:
       - 5432:5432
     env_file:
       - ./backend/.env.production
-    profiles: [backend]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   adminer:
-    container_name: adminer
+    container_name: gifty-adminer
     image: adminer
     restart: always
     ports:
-      - 8081:8080
+      - 8082:8080
 
+volumes:
+  pgdata:
 
