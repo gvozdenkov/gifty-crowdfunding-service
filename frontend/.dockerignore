@@ -1,1 +1,7 @@
-node_modules
+*
+# ignore all except below
+!src/
+!public/
+!nginx/
+!package*.json
+!.env*
