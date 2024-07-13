@@ -1,7 +1,7 @@
 {
-  "name": "gifty",
+  "name": "wish-magic",
   "version": "1.0.0",
-  "description": "gift crowdfunding service",
+  "description": "wishlist & crowdfunding service",
   "main": "index.js",
   "scripts": {
     "prettier": "prettier --write '**/*.(ts|js)'",
