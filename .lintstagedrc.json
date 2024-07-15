@@ -1,4 +1,4 @@
 {
-  "*.(js|ts)": ["yarn prettier:write", "eslint"],
-  "*.md": "yarn prettier:write"
+  "*.(js|ts)": ["pnpm prettier:write", "eslint"],
+  "*.md": "pnpm prettier:write"
 }
