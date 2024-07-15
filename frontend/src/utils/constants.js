@@ -1,4 +1,4 @@
-export const URL = 'https://api.gifty.nomorepartiesco.ru/api/v1';
+export const URL = 'http://localhost:4000/api/v1';
 
 export const MINIMUM_PASSWORD_LENGTH = 3;
 export const MINIMUM_USERNAME_LENGTH = 3;
