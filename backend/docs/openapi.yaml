@@ -1,18 +1,8 @@
 ---
 openapi: 3.1.0
 info:
-  title: Gift Croudfunding
-  description: >-
-    Gift croudfunding service API
-
-    Some useful links:
-
-    - [backend repository](https://github.com/gvozdenkov/kupipodariday-backend)
-
-    - [frontend repository](https://github.com/yandex-praktikum/kupipodariday-frontend)
-
-    - [The source API
-    definition](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  title: Wish magic
+  description: Wishlist & croudfunding service API
   contact:
     email: gvozdenkov@gmail.com
   license:
@@ -21,10 +11,8 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:3000/api/v1
+  - url: http://localhost:4000/api/v1/docs
     description: Locale dev server
-  - url: https://virtserver.swaggerhub.com/zlocate/KupiPodariDay/1.0.0
-    description: SwaggerHub API Auto Mocking
 
 tags:
   - name: wishes
