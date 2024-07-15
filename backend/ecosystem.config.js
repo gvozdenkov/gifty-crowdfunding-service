@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'gifty-backend',
+      name: 'wish-magic-backend',
       script: 'build/main.js',
     },
   ],

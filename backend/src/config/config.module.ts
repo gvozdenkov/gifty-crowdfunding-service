@@ -8,7 +8,7 @@ import Joi from 'joi';
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
         PORT: Joi.number().required(),
-        PG_CONTAINER_NAME: Joi.string().default('gifty-postgres-prod'),
+        PG_CONTAINER_NAME: Joi.string().default('wish-magic-postgres-prod'),
         POSTGRES_USER: Joi.string().required(),
         POSTGRES_PASSWORD: Joi.string().required(),
         POSTGRES_DB: Joi.string().required(),

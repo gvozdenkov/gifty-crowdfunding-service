@@ -1,7 +1,7 @@
 services:
   frontend:
-    container_name: gifty-frontend-dev
-    image: gifty-frontend:dev
+    container_name: wish-magic-frontend-dev
+    image: wish-magic-frontend:dev
     depends_on:
       - backend
     restart: on-failure
@@ -11,13 +11,13 @@ services:
     volumes:
       - ./frontend/src:/app/src
     ports:
-      - 3000:3000
+      - 3001:3000
 
   backend:
-    container_name: gifty-backend-dev
+    container_name: wish-magic-backend-dev
     depends_on:
       - db
-    image: gifty-backend:dev
+    image: wish-magic-backend:dev
     restart: on-failure
     build:
       context: ./backend
@@ -30,7 +30,7 @@ services:
       - ./backend/.env.development
 
   db:
-    container_name: gifty-postgres-dev
+    container_name: wish-magic-postgres-dev
     image: postgres:14.3-alpine
     restart: on-failure
     ports:

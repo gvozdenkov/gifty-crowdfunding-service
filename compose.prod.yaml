@@ -1,7 +1,7 @@
 services:
   frontend:
-    container_name: gifty-frontend-prod
-    image: gifty-frontend:prod
+    container_name: wish-magic-frontend-prod
+    image: wish-magic-frontend:prod
     depends_on:
       - backend
     restart: on-failure
@@ -14,10 +14,10 @@ services:
       - frontend
 
   backend:
-    container_name: gifty-backend-prod
+    container_name: wish-magic-backend-prod
     depends_on:
       - db
-    image: gifty-backend:prod
+    image: wish-magic-backend:prod
     restart: on-failure
     build:
       context: ./backend
@@ -30,7 +30,7 @@ services:
       - backend
 
   db:
-    container_name: gifty-postgres-prod
+    container_name: wish-magic-postgres-prod
     image: postgres:14.3-alpine
     restart: on-failure
     ports:
@@ -43,7 +43,7 @@ services:
       - backend
 
   adminer:
-    container_name: gifty-adminer
+    container_name: wish-magic-adminer
     image: adminer
     restart: always
     ports:
